@@ -1,75 +1,92 @@
 import React, { useState } from 'react';
-import { View, Dimensions, TouchableOpacity, Text, ScrollView } from 'react-native';
-import Input from '../Components/TextInput';
-import ButtonLarge from '../Components/ButtonLarge';
+import { View, Dimensions, TouchableOpacity, Text, ScrollView, StyleSheet, } from 'react-native';
+import Input from '../components/TextInput';
+import ButtonLarge from '../components/ButtonLarge';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-function Login({navigation}) {
+function Login({ navigation }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ flex: 1, backgroundColor: '#EEF1F8' }}>
+            <View style={styles.header}>
+                <TouchableOpacity>
+                    <Icon name="keyboard-arrow-left" size={35} color="white" />
+                </TouchableOpacity>
+                <Text style={{ fontSize: 16, color: 'white', marginLeft: '25%' }}>New account</Text>
+            </View>
+            <View style={styles.buttonsView}>
+                <TouchableOpacity onPress={() => console.log("Button Pressed!")} activeOpacity={1} style={styles.buttonInnerView}>
+                    <Text style={{ fontSize: 16, color: '#86A7D9', fontWeight: 'bold' }}>Sign Up</Text>
+                </TouchableOpacity>
+                <View style={styles.buttonInnerView1}>
+                    <Text style={{ fontSize: 16, color: '#D800D2', fontWeight: 'bold' }}>Sign In</Text>
+                </View>
+            </View>
             <ScrollView>
-                <Text style={{
-                    fontSize: 32, color: '#707070', fontFamily: 'OpenSans-Regular', marginLeft: '5%',
-                    marginTop: windowHeight / 100 * 5, marginBottom: 40
-                }}>
-                    Log in to your {'\n'}Account
-            </Text>
-
+                <View style={{height: 50}} />
                 <Input
-                    placeholder="Email"
+                    placeholder="Email*"
                     onChangeText={text => setEmail(text)}
                     value={email}
                 />
 
                 <Input
-                    placeholder="Password"
+                    placeholder="Password*"
                     value={password}
                     onChangeText={text => setPassword(text)}
                 />
 
-                <TouchableOpacity onPress = {() => navigation.navigate("ResetPassword")} style={{ alignSelf: 'flex-end', marginRight: '5%' }}>
+                <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")} style={{ alignSelf: 'center' }}>
 
                     <Text style={{
-                        fontSize: 14, color: '#707070', fontFamily: 'OpenSans-SemiBold',
-                        marginTop: 10,
+                        fontSize: 16, color: '#BBC1CE',
+                        marginTop: 10, fontWeight: 'bold'
                     }}>
-                        Forgot password ?
+                        Forgot your password?
                 </Text>
 
                 </TouchableOpacity>
 
-                <ButtonLarge
-                    title="Log in"
-                    onPress = {() => navigation.navigate("OtpVerify")}
-                />
+                <View style={{height: 100}} />
 
-                <View style={{ marginTop: 15, alignSelf: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                <ButtonLarge onPress={() => console.log("Button Pressed!")} title="Sign in" />
 
-                    <Text style={{
-                        fontSize: 14, color: '#707070', fontFamily: 'OpenSans-Regular',
-                        marginTop: 10,
-                    }}>
-                        New User ? </Text>
-
-                    <TouchableOpacity onPress = {() => navigation.navigate("createAccount")} style={{ alignSelf: 'flex-end', marginRight: '5%' }}>
-
-                        <Text style={{
-                            fontSize: 14, color: '#707070', fontFamily: 'OpenSans-SemiBold',
-                            marginTop: 10,
-                        }}>
-                            CREATE ACCOUNT
-                        </Text>
-
-                    </TouchableOpacity>
-
-                </View>
             </ScrollView>
         </View>
     );
 }
 
 export default Login;
+
+const styles = StyleSheet.create({
+    header: {
+        height: 55,
+        backgroundColor: '#D800D2',
+        flexDirection: 'row',
+        paddingLeft: '3%',
+        alignItems: 'center'
+    },
+    buttonsView: {
+        flexDirection: 'row'
+    },
+    buttonInnerView: {
+        backgroundColor: 'white',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '50%'
+    },
+    buttonInnerView1: {
+        backgroundColor: 'white',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '50%',
+        borderBottomWidth: 2,
+        borderBottomColor: '#8F97AC'
+    }
+})

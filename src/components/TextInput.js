@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
         height: 50,
         width: '90%',
         borderColor: '#707070',
-        borderWidth: 1,
-        borderRadius: 8,
+        backgroundColor: 'white',
+        borderRadius: 5,
         alignSelf: 'center',
-        marginTop: 20,
+        marginTop: 15,
         paddingHorizontal: 15,
         fontSize: 16,
-        color: '#707070',
+        color: '#C3C7D0',
         fontFamily: 'OpenSans-Regular'
     }
 })
