@@ -62,7 +62,7 @@ function SignUp({ navigation }) {
     return (
         <View style={{ flex: 1, backgroundColor: '#EEF1F8' }}>
             <View style={styles.header}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Icon name="arrow-back" size={30} color="white" />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 16, color: 'white', marginLeft: '5%', fontWeight: 'bold' }}>Sign Up</Text>
@@ -108,7 +108,7 @@ function SignUp({ navigation }) {
                     value={confirmPassword}
                 />
 
-                <ButtonLarge onPress={() => console.log("Button Pressed!")} title="Sign Up" />
+                <ButtonLarge  onPress={() => navigation.navigate("Login")} title="Sign Up" />
 
             </ScrollView>
             {!isKeyboardVisible ?

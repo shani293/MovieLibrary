@@ -84,7 +84,7 @@ project.ext.react = [
 apply from: "../../node_modules/react-native/react.gradle"
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialIcons.ttf', 'Octicons.ttf', 'SimpleLineIcons', 'EvilIcons.ttf', 'Zocial.ttf', 'FontAwesome.ttf', 'AntDesign.ttf', 'EvilIcons.ttf', 'MaterialCommunityIcons.ttf', 'Entypo.ttf', 'Feather.ttf', 'FontAwesome 5.ttf', 'Fontisto.ttf', 'Foundation.ttf', 'Ionicons.ttf' ] // Name of the font files you want to copy
+    iconFontNames: [ 'MaterialIcons.ttf', 'Octicons.ttf', 'SimpleLineIcons', 'EvilIcons.ttf', 'Zocial.ttf', 'FontAwesome.ttf', 'AntDesign.ttf', 'EvilIcons.ttf', 'MaterialCommunityIcons.ttf', 'Entypo.ttf', 'Feather.ttf', 'FontAwesome5.ttf', 'Fontisto.ttf', 'Foundation.ttf', 'Ionicons.ttf' ] // Name of the font files you want to copy
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
@@ -131,6 +131,17 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    signingConfigs {
+    release {
+        if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storePassword MYAPP_RELEASE_STORE_PASSWORD
+            keyAlias MYAPP_RELEASE_KEY_ALIAS
+            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
+    }
+}
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -169,6 +180,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
 

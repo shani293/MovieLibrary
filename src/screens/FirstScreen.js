@@ -8,15 +8,15 @@ function FirstScreen({ navigation }) {
         <View style={{ flex: 1, backgroundColor: '#EEF1F8' }}>
                     <Text style={styles.title}>Movie Library App</Text>
                     <View style={styles.buttonsView}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                             <Icon name="home" color="#AF45C6" size={30} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Search")}>
                             <Icon1 name="search" color="#AF45C6" size={30} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                             <Icon1 name="user-circle-o" color="#AF45C6" size={30} />
                         </TouchableOpacity>
                     </View>

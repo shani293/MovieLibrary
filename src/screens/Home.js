@@ -29,10 +29,10 @@ function Home({ navigation }) {
     return (
         <View style={{ flex: 1, backgroundColor: '#EEEEEE' }}>
             <View style={styles.header}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Icon1 name="keyboard-arrow-left" size={35} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={1} style={styles.searchStyle}>
+                <TouchableOpacity onPress={() => navigation.navigate("Search")} activeOpacity={1} style={styles.searchStyle}>
                     <Icon name="search" color="white" size={15} />
                     <Text style={{ fontSize: 14, color: 'white', marginLeft: '3%' }}>Search</Text>
                 </TouchableOpacity>
@@ -48,7 +48,7 @@ function Home({ navigation }) {
                     horizontal
                     renderItem={({ item, index }) =>
 
-                        <TouchableOpacity style={{ marginLeft: 20 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("MovieDetail")} style={{ marginLeft: 20 }}>
                             <Image source={item.image} style={{ height: 250, width: (windowWidth / 100) * 45 }} />
                         </TouchableOpacity>
                     }
@@ -64,7 +64,7 @@ function Home({ navigation }) {
                     horizontal
                     renderItem={({ item, index }) =>
 
-                        <TouchableOpacity style={{ marginLeft: 20 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("MovieDetail")} style={{ marginLeft: 20 }}>
                             <Image source={item.image} style={{ height: 250, width: (windowWidth / 100) * 45 }} />
                         </TouchableOpacity>
                     }

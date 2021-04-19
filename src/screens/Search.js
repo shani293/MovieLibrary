@@ -1,132 +1,110 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
+import { View, Dimensions, TouchableOpacity, Text, FlatList, StyleSheet, } from 'react-native';
+import Input from '../components/TextInput';
+import ButtonLarge from '../components/ButtonLarge';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SearchBar } from 'react-native-elements';
 
-// Import all the components we are going to use
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
-// Import Autocomplete component
-import Autocomplete from 'react-native-autocomplete-input';
+const dataArray = [
+  {
+    id: '1',
+    title: 'Frozen D'
+  },
+  {
+    id: '2',
+    title: 'Xmen de'
+  },
+  {
+    id: '3',
+    title: 'Amazing Content'
+  },
+  {
+    id: '4',
+    title: 'Demo'
+  },
+]
 
-const Search = ({navigation}) => {
-  // For Main Data
-  const [films, setFilms] = useState([]);
-  // For Filtered Data
-  const [filteredFilms, setFilteredFilms] = useState([]);
-  // For Selected Data
-  const [selectedValue, setSelectedValue] = useState({});
+function Search({ navigation }) {
+  const [search, setSearch] = useState("")
+  const [searchArray, setSearchArray] = useState([])
 
-  useEffect(() => {
-    fetch('https://aboutreact.herokuapp.com/getpost.php?offset=1')
-      .then((res) => res.json())
-      .then((json) => {
-        const {results: films} = json;
-        setFilms(films);
-        //setting the data in the films state
-      })
-      .catch((e) => {
-        alert(e);
-      });
-  }, []);
-
-  const findFilm = (query) => {
-    // Method called every time when we change the value of the input
-    if (query) {
-      // Making a case insensitive regular expression
-      const regex = new RegExp(`${query.trim()}`, 'i');
-      // Setting the filtered film array according the query
-      setFilteredFilms(
-          films.filter((film) => film.title.search(regex) >= 0)
-      );
-    } else {
-      // If the query is null then return blank
-      setFilteredFilms([]);
-    }
-  };
-
+  const onChange = (search) => {
+    setSearch(search)
+    console.log(search)
+    let data = dataArray.filter((item) => item.title.toLowerCase().includes(search.toLowerCase())).map(({ title }) => ({ title }));
+    setSearchArray(data)
+    console.log("DATA", searchArray)
+  }
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <Autocomplete
-          autoCapitalize="none"
-          autoCorrect={false}
-          containerStyle={styles.autocompleteContainer}
-          // Data to show in suggestion
-          data={filteredFilms}
-          // Default value if you want to set something in input
-          defaultValue={
-            JSON.stringify(selectedValue) === '{}' ?
-            '' :
-            selectedValue.title
-          }
-          // Onchange of the text changing the state of the query
-          // Which will trigger the findFilm method
-          // To show the suggestions
-          onChangeText={(text) => findFilm(text)}
-          placeholder="Enter the film title"
-          renderItem={
-              (films.map(element => {
-                <TouchableOpacity
-                onPress={() => {
-                  setSelectedValue(item);
-                  setFilteredFilms([]);
-                }}>
-                <Text style={styles.itemText}>
-                    {element.title}
+    <View style={{ flex: 1, backgroundColor: '#EEF1F8' }}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="keyboard-arrow-left" size={35} color="white" />
+        </TouchableOpacity>
+        <SearchBar
+          containerStyle={{ width: '70%', backgroundColor: 'transparent' }}
+          inputContainerStyle={{ height: 45, width: '100%', backgroundColor: '#ACA6AD' }}
+          placeholderTextColor="white"
+          inputStyle={{ color: 'white', paddingLeft: -15 }}
+          leftIconContainerStyle={{ marginLeft: 3, marginRight: -10 }}
+          rightIconContainerStyle={{ marginRight: 0 }}
+          placeholder="Type Here..."
+          onChangeText={(text) => onChange(text)}
+          value={search}
+          returnKeyType="search"
+          autoFocus={true}
+        />
+        <TouchableOpacity>
+          <Text style={{ fontSize: 16, color: 'white' }}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+      {search != "" ?
+        <FlatList
+          data={searchArray}
+          renderItem={({ item, index }) =>
+
+            <View style={styles.listView}>
+              <TouchableOpacity onPress={() => navigation.navigate("SearchResults")} style={styles.itemStyle}>
+                <Text style={styles.textStyle}>
+                  {item.title}
                 </Text>
               </TouchableOpacity>
-              }))
+
+            </View>
           }
+
+          keyExtractor={item => item.id}
+
         />
-        <View style={styles.descriptionContainer}>
-          {films.length > 0 ? (
-            <>
-              <Text style={styles.infoText}>
-                   Selected Data
-              </Text>
-              <Text style={styles.infoText}>
-                {JSON.stringify(selectedValue)}
-              </Text>
-            </>
-          ) : (
-            <Text style={styles.infoText}>
-                Enter The Film Title
-            </Text>
-          )}
-        </View>
-      </View>
-    </SafeAreaView>
+        : null
+      }
+    </View>
   );
-};
+}
+
+export default Search;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#F5FCFF',
-    flex: 1,
-    padding: 16,
-    marginTop: 40,
+  header: {
+    height: 55,
+    backgroundColor: '#D800D2',
+    flexDirection: 'row',
+    paddingLeft: '3%',
+    alignItems: 'center'
   },
-  autocompleteContainer: {
-    backgroundColor: '#ffffff',
-    borderWidth: 0,
+  listView: {
+    maxHeight: 250,
+    backgroundColor: 'white'
   },
-  descriptionContainer: {
-    flex: 1,
-    justifyContent: 'center',
+  itemStyle: {
+    height: 45,
+    backgroundColor: 'white',
+    justifyContent: 'center'
   },
-  itemText: {
-    fontSize: 15,
-    paddingTop: 5,
-    paddingBottom: 5,
-    margin: 2,
-  },
-  infoText: {
-    textAlign: 'center',
-    fontSize: 16,
-  },
-});
-export default Search;
+  textStyle: {
+    marginLeft: '5%'
+  }
+})

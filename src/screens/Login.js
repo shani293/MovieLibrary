@@ -13,13 +13,13 @@ function Login({ navigation }) {
     return (
         <View style={{ flex: 1, backgroundColor: '#EEF1F8' }}>
             <View style={styles.header}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Icon name="keyboard-arrow-left" size={35} color="white" />
                 </TouchableOpacity>
                 <Text style={{ fontSize: 16, color: 'white', marginLeft: '25%' }}>New account</Text>
             </View>
             <View style={styles.buttonsView}>
-                <TouchableOpacity onPress={() => console.log("Button Pressed!")} activeOpacity={1} style={styles.buttonInnerView}>
+                <TouchableOpacity onPress={() => navigation.navigate("SignUp")} activeOpacity={1} style={styles.buttonInnerView}>
                     <Text style={{ fontSize: 16, color: '#86A7D9', fontWeight: 'bold' }}>Sign Up</Text>
                 </TouchableOpacity>
                 <View style={styles.buttonInnerView1}>
@@ -40,7 +40,7 @@ function Login({ navigation }) {
                     onChangeText={text => setPassword(text)}
                 />
 
-                <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")} style={{ alignSelf: 'center' }}>
+                <TouchableOpacity style={{ alignSelf: 'center' }}>
 
                     <Text style={{
                         fontSize: 16, color: '#BBC1CE',
@@ -53,7 +53,7 @@ function Login({ navigation }) {
 
                 <View style={{height: 100}} />
 
-                <ButtonLarge onPress={() => console.log("Button Pressed!")} title="Sign in" />
+                <ButtonLarge onPress={() => navigation.navigate("Home")} title="Sign in" />
 
             </ScrollView>
         </View>
